@@ -14,6 +14,9 @@ namespace Animating_In_Monogame
         List<Color> colours = new List<Color>();
         Color backgroundColor;
 
+        int randomY;
+        int randomX;
+
         //Grey
         Texture2D tribblegreyTexture;
         Rectangle tribblegreyRect;
@@ -38,6 +41,7 @@ namespace Animating_In_Monogame
 
         public Game1()
         {
+            //COLOUR LIST
             colours.Add(Color.CornflowerBlue);
             colours.Add(Color.Firebrick);
             colours.Add(Color.LimeGreen);
@@ -50,10 +54,19 @@ namespace Animating_In_Monogame
             colours.Add(Color.DarkTurquoise);
             colours.Add(Color.Salmon);
             colours.Add(Color.Chartreuse);
-            colours.Add(Color.Silver);
-
+            colours.Add(Color.Aquamarine);
+            colours.Add(Color.Crimson);
+            colours.Add(Color.White);
+            colours.Add(Color.Red);
+            colours.Add(Color.Fuchsia);
+            colours.Add(Color.DarkOliveGreen);
+            colours.Add(Color.DarkOrchid);
+            colours.Add(Color.DodgerBlue);
+            colours.Add(Color.Goldenrod);
+            colours.Add(Color.MonoGameOrange);
             // randomly picks a color from the list
             backgroundColor = colours[generator.Next(colours.Count)];
+
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -62,15 +75,21 @@ namespace Animating_In_Monogame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            randomX = generator.Next(0, _graphics.PreferredBackBufferWidth);
+            randomY = generator.Next(0, _graphics.PreferredBackBufferHeight);
+
+
 
             tribblegreyRect = new Rectangle(300, 10, 100, 100);
-            tribblegreySpeed = new Vector2(20, 1);
+            tribblegreySpeed = new Vector2(10, 1);
 
-            tribblecreamRect = new Rectangle(300, 140, 100, 100);
-            tribblecreamSpeed = new Vector2(0, 20);
+            tribblecreamRect = new Rectangle(randomX, randomY, 100, 100);
+            tribblecreamSpeed = new Vector2(20, 0);
 
-            tribbleorangeRect = new Rectangle(300, 140, 100, 100);
-            tribbleorangeSpeed = new Vector2(15, 0);
+            randomX = generator.Next(0, _graphics.PreferredBackBufferWidth-100);
+            randomY = generator.Next(0, _graphics.PreferredBackBufferHeight-80);
+            tribbleorangeRect = new Rectangle(randomX, randomY, 100, 100);
+            tribbleorangeSpeed = new Vector2(0, 20);
 
             tribblebrownRect = new Rectangle(0, 0, 100, 100);
             tribblebrownSpeed = new Vector2(10, 10);
@@ -118,13 +137,15 @@ namespace Animating_In_Monogame
                 backgroundColor = colours[generator.Next(colours.Count)];
 
             //CREAM
-            tribblecreamRect.X += (int)tribblecreamSpeed.X;
-            if (tribblecreamRect.Right >= _graphics.PreferredBackBufferWidth || tribblecreamRect.Left <= 0)
-                tribblecreamSpeed.X *= -1;
 
-            tribblecreamRect.Y += (int)tribblecreamSpeed.Y;
-            if (tribblecreamRect.Bottom > _graphics.PreferredBackBufferHeight || tribblecreamRect.Top < 0)
-                tribblecreamSpeed.Y *= -1;
+            tribblecreamRect.X += (int)tribblecreamSpeed.X;
+            if (tribblecreamRect.Right > 900)
+            {
+                randomY = generator.Next(0, _graphics.PreferredBackBufferHeight);
+                tribblecreamRect = new Rectangle(-100, randomY, 100, 100);
+
+            }
+
 
             //ORANGE
             tribbleorangeRect.X += (int)tribbleorangeSpeed.X;
